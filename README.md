@@ -1,4 +1,4 @@
-#HEXOJS EXAMPLE
+# HEXOJS EXAMPLE
 
 This project show how to deploy hexoJS on Clever Cloud.
 
