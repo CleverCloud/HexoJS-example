@@ -16,7 +16,7 @@ Log in the UI and close it. Then create your Python application and PostgreSQL a
 clever create --type node --region par HexoJS-app
 ```
 
-More information on parameters [HERE](https://www.clever-cloud.com/doc/clever-tools/create/).
+More information on parameters [HERE]([https://www.clever-cloud.com/doc/clever-tools/create/](https://www.clever-cloud.com/developers/doc/cli/create/)).
 
 If needed, you can set the scaling :
 
@@ -25,7 +25,7 @@ clever scale --min-flavor pico --max-flavor pico
 clever scale --min-instances 1 --max-instances 1
 ```
 
-More information on scaling [HERE](https://www.clever-cloud.com/doc/clever-tools/manage/).
+More information on scaling [HERE](https://www.clever-cloud.com/developers/doc/cli/manage/#scalability).
 
 ### Environment setup
 
