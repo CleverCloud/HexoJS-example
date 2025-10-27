@@ -1,64 +1,56 @@
-# HEXOJS EXAMPLE
+# Deploy an Hexo based application on Clever Cloud
 
-This project show how to deploy hexoJS on Clever Cloud.
+This project show how to deploy Hexo on Clever Cloud.
 
-### Create the app
+## Clever Tools setup
 
-At the root of the project :
-
-```bash
-clever login
-```
-
-Log in the UI and close it. Then create your Python application and PostgreSQL add-on :
+You need [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), a [Clever Cloud account](https://console.clever-cloud.com) and [Clever Tools to follow this tutorial](https://www.github.com/CleverCloud/clever-tools). If you don't have it installed, you can do it using npm or [your favorite package manager](https://www.clever.cloud/developers/doc/cli/install/):
 
 ```bash
-clever create --type node --region par HexoJS-app
+npm install -g clever-tools
+
+clever login   # Log in to your Clever Cloud account
+clever profile # Check you're connected
 ```
 
-More information on parameters [HERE](https://www.clever-cloud.com/developers/doc/cli/create/).
+## Create an application using Static runtime
 
-If needed, you can set the scaling :
+Clone this project and create [a static application](https://www.clever.cloud/developers/doc/applications/static/):
 
 ```bash
-clever scale --min-flavor pico --max-flavor pico
-clever scale --min-instances 1 --max-instances 1
+git clone https://github.com/CleverCloud/HexoJS-example
+cd HexoJS-example
+clever create --type static
 ```
 
-More information on scaling [HERE](https://www.clever-cloud.com/developers/doc/cli/manage/#scalability).
+Find more information about Clever Tools parameters [here](https://www.clever.cloud/developers/doc/cli/applications/).
+
+If needed, set the scaling:
+
+```bash
+clever scale --flavor pico
+clever scale --build-flavor M
+```
+
+More information about Clever Tools `scale` command [here](https://www.clever.cloud/developers/doc/cli/applications/configuration/#scale-and-dedicated-build).
 
 ### Environment setup
 
-You need to setup one Environment variable :
+You need to setup some environment variables:
 
 ```bash
-clever env set CC_PRE_BUILD_HOOK "npm install hexo-cli -g"
+# Define the folder where the static files are located
+clever env set CC_WEBROOT "/public"
+
+# Define commands to install dependencies and build
+clever env set CC_PRE_BUILD_HOOK "npm install"
+clever env set CC_BUILD_COMMAND "npm run build"
 ```
-
-Optionally, if you want the command `hexo genrate` to be launched at every deployment to automatically generate the static file, you can also add :
-
-```bash
-clever env set CC_POST_BUILD_HOOK "hexo genrate"
-```
-
-### Modify hexo server configuration
-
-The hexoJS server launch is configured in the `package.json` in the `scripts/start` field.  
-This example is set to use the command :
-
-```bash
-hexo server --port 8080 --static
-```
-
-Listening on port 8080 is necessary to deploy on Clever Cloud. 
-The `--static` option means only static page generated with `hexo generate` are shown. You can remove this option if you want.
 
 ### Deploy !
 
-Nothing else left to do, just go on and deploy your app :
+Nothing else left to do, just deploy your application:
 
 ```bash
 clever deploy
 ```
-
-
